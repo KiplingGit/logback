@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoder 默认配置为PatternLayoutEncoder -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	 <!-- ConsoleAppender 控制台输出日志 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                <!-- 设置日志输出格式 -->
+                %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+	<!-- logback为java中的包 -->
+	<logger name="me.kipling.logback" />
+	<!--
+	1、logback.LogbackDemo：类的全路径 ，additivity是否向上传递，并且level级别覆盖上级的
+	2、如果最底层additivity=false，或者level=off，这意味着上层日志打印不出来。
+	-->
+	<logger name="me.kipling.logback.LogbackDemo" level="info" additivity="false">
+		<!-- <appender-ref ref="STDOUT" /> -->
+		<appender-ref ref="console" />
+	</logger>
+
+	<!-- 
+	<root>
+	也是<loger>元素，但是它是根loger。只有一个level属性，应为已经被命名为"root".
+	level:
+	用来设置打印级别，大小写无关：TRACE, DEBUG, INFO, WARN, ERROR, ALL 和 OFF，不能设置为INHERITED或者同义词NULL。
+	默认是DEBUG。
+	<root>可以包含零个或多个<appender-ref>元素，标识这个appender将会添加到这个loger。
+	 -->
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		
+		<!-- 
+		设置两个level，则可以输出 ERROR和INFO级别的日志了。
+		<level value="error" />  
+        <level value="info" />  
+         -->
+	</root>
+</configuration> 

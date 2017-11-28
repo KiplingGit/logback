@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoder 默认配置为PatternLayoutEncoder -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- ConsoleAppender 控制台输出日志 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				<!-- 设置日志输出格式 -->
+				%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- logback为java中的包 -->
+	<logger name="me.kipling.logback" />
+	<!--logback.LogbackDemo：类的全路径 ，additivity是否向上传递，并且level级别覆盖上级的,
+	如果最底层的关闭了，或者不打日志，这意味着上层日志也打印不出来 -->
+	<logger name="me.kipling.logback.LogbackDemo" level="ERROR"
+		additivity="true">
+		<!-- <appender-ref ref="STDOUT" /> -->
+		<appender-ref ref="console" />
+	</logger>
+
+
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>testFile.log</file>
+		<append>true</append>	
+		<encoder>
+			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<root level="DEBUG">
+		<appender-ref ref="FILE" />
+	</root>
+
+</configuration> 

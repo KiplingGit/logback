@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoder 默认配置为PatternLayoutEncoder -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- ConsoleAppender 控制台输出日志 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				<!-- 设置日志输出格式 -->
+				<!-- %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger - %msg%n -->
+				%d [%thread] %-5level %logger - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- logback为java中的包 -->
+	<logger name="me.kipling.logback" />
+	<!--logback.LogbackDemo：类的全路径 ，additivity是否向上传递，并且level级别覆盖上级的, 
+	如果最底层的关闭了，或者不打日志，这意味着上层日志也打印不出来 -->
+	<logger name="me.kipling.logback.LogbackDemo" level="debug"
+		additivity="true">
+		<!-- <appender-ref ref="STDOUT" /> -->
+		<appender-ref ref="console" />
+	</logger>
+
+
+
+	<!-- 只要配置了appender为生成文件，就会创建文件，如果appender没有被引用，文件内容为空 -->
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>testFile.log</file>
+		<append>true</append>
+		<encoder>
+			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+
+	<!-- 只要配置了appender为生成文件，就会创建文件，如果appender没有被引用，文件内容为空 -->
+	<appender name="FILE1"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>SStestFile.log</file>
+		<!-- 只保留info级别的日志 -->
+		<!-- <filter class="ch.qos.logback.classic.filter.LevelFilter"> <level>info</level> 
+			<onMatch>ACCEPT</onMatch> <onMismatch>DENY</onMismatch> </filter> -->
+
+		<!-- 保留INFO级别以上的日志，常用 -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- maxHistory 可选节点，控制保留的归档文件的最大数量，超出数量就删除旧文件。假设设置每个月滚动，且<maxHistory>是6， 
+				则只保存最近6个月的文件，删除之前的旧文件。注意，删除旧文件是，那些为了归档而创建的目录也会被删除。 -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+
+	<appender name="file_log"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/log.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${BACKUP}/log%d{yyyy-MM-dd}-%i.log.zip
+			</fileNamePattern>
+			<maxHistory>7</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>1MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${PATTERN_DEF}</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- ch.qos.logback.core.rolling.RollingFileAppender 文件日志输出 -->  
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <Encoding>UTF-8</Encoding>
+        <File>/home/test.log</File>  
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+            <FileNamePattern>/home/test-%d{yyyy-MM-dd}.%i.log</FileNamePattern>  
+            <MaxHistory>10</MaxHistory>  
+            <TimeBasedFileNamingAndTriggeringPolicy  
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">  
+                <MaxFileSize>5MB</MaxFileSize>  
+            </TimeBasedFileNamingAndTriggeringPolicy>  
+        </rollingPolicy>  
+        <layout class="ch.qos.logback.classic.PatternLayout">  
+            <pattern>[%-5level] %d{HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n  
+            </pattern>  
+        </layout>  
+    </appender>  
+
+	<root level="DEBUG">
+		<appender-ref ref="FILE" />
+	</root>
+</configuration> 
