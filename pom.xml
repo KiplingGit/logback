@@ -6,7 +6,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<dependencies>
+<dependencyManagement>
+<dependencies>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-access</artifactId>
@@ -19,6 +20,8 @@
 		</dependency>
 	</dependencies>
 
+</dependencyManagement>
+	
 	<build>
 		<plugins>
 			<plugin>
@@ -38,5 +41,5 @@
 		<module>logback-three</module>
 		<module>logback-two</module>
 	</modules>
-
+	
 </project>
