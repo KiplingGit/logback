@@ -56,10 +56,18 @@
 		</filter>
 
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 每天一归档 -->
 			<fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<!-- maxHistory 可选节点，控制保留的归档文件的最大数量，超出数量就删除旧文件。假设设置每个月滚动，且<maxHistory>是6， 
 				则只保存最近6个月的文件，删除之前的旧文件。注意，删除旧文件是，那些为了归档而创建的目录也会被删除。 -->
 			<maxHistory>30</maxHistory>
+			  <!-- 单个日志文件最多 100MB, 30天的日志周期，最大不能超过20GB -->
+			  <!-- 
+			  maxHistory ,可选节点，控制保留的归档文件的最大数量，超出数量就删除旧文件,，例如设置为30的话，则30天之后，旧的日志就会被删除
+			  totalSizeCap，可选节点，用来指定日志文件的上限大小，例如设置为3GB的话，那么到了这个值，就会删除旧的日志
+			  -->
+			 <maxFileSize>100MB</maxFileSize>    
+             <totalSizeCap>20GB</totalSizeCap>
 		</rollingPolicy>
 		<encoder>
 			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n
